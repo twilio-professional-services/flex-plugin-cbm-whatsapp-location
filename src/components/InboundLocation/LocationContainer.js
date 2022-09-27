@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { TaskHelper } from "@twilio/flex-ui";
 import Location from "./Location";
 import { SyncDocumentSubscription } from "../../helpers/syncHelper";

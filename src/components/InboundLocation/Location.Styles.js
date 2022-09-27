@@ -2,7 +2,7 @@ import { withTheme, styled } from "@twilio/flex-ui";
 
 export const Container = styled("div")`
   padding-left: 3%;
-  padding-right: 3.75%;
+  padding-right: 3%;
   padding-top: 5px;
   padding-bottom: 10px;
   display: flex;
@@ -13,7 +13,7 @@ export const Container = styled("div")`
 
 export const SeparatorContainer = styled("div")`
   padding-left: 3%;
-  padding-right: 3.75%;
+  padding-right: 3%;
 `;
 
 export const IconDiv = styled("div")`

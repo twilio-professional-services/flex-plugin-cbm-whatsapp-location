@@ -1,46 +1,61 @@
 import { useState } from "react";
-import { useFlexSelector } from "@twilio/flex-ui";
+import { withTaskContext } from "@twilio/flex-ui";
 import { ClickabletMap, Marker } from "./GoogleMap/GoogleMap";
-import { subscribeWhatsAppMapComponentViewState } from "../../helpers/whatsAppMapComponentViewState";
+import Location from "../../classes/location";
+import {
+  subscribeWhatsAppMapComponentViewState,
+  setWhatsAppMapComponentViewState,
+  OutboundLocation,
+} from "../../helpers/whatsAppMapComponentViewState";
 
 const defaultMapCentre = { lat: 37.7923789, lng: -122.3925021 };
 
-const getWhatsAppsMapStateForSelectedChat = () => {
-  const selectedTaskSid = useFlexSelector(
-    (state) => state.flex?.view?.selectedTaskSid
-  );
-
-  return subscribeWhatsAppMapComponentViewState(selectedTaskSid);
-};
-
-const WhatsAppMap = () => {
-  const clickHandler = (e) => {
-    console.log(e, e.latLng.toJSON());
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode(
-      {
-        latLng: e.latLng,
-      },
-      function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
-            console.log(results[0].formatted_address, results[0]);
-          }
+const updateWhatsAppMapComponentViewState = (taskSid, latLng) => {
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode(
+    {
+      latLng,
+    },
+    function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (taskSid && results[0]) {
+          console.log("geocode", results);
+          console.log("geocode", results[0].formatted_address);
+          const latLngJson = latLng.toJSON();
+          setWhatsAppMapComponentViewState(
+            taskSid,
+            OutboundLocation,
+            new Location(
+              new Date(),
+              latLngJson.lat.toString(),
+              latLngJson.lng.toString(),
+              "Outbound WhatsApp Location",
+              results[0].formatted_address
+            )
+          );
         }
       }
-    );
-    updateClickMarkerLocation(e.latLng);
+    }
+  );
+};
+
+const WhatsAppMap = ({ task }) => {
+  const clickHandler = (e) => {
+    console.log(e, e.latLng.toJSON());
+    updateWhatsAppMapComponentViewState(task.sid, e.latLng);
   };
 
-  const [clickMarkerLocation, updateClickMarkerLocation] = useState(null);
-  const { IncomingLocation = null, ShowMap = null } =
-    getWhatsAppsMapStateForSelectedChat() || {};
+  const {
+    IncomingLocation = null,
+    ShowMap = null,
+    OutboundLocation,
+  } = subscribeWhatsAppMapComponentViewState(task?.sid) || {};
 
   const customersLastSentLocation = IncomingLocation
-    ? {
-        lat: Number(IncomingLocation.Latitude),
-        lng: Number(IncomingLocation.Longitude),
-      }
+    ? IncomingLocation.GoogleMapsLatLng
+    : null;
+  const clickMarkerLocation = OutboundLocation
+    ? OutboundLocation.GoogleMapsLatLng
     : null;
 
   if (!ShowMap) return null;
@@ -80,4 +95,4 @@ const WhatsAppMap = () => {
   );
 };
 
-export default WhatsAppMap;
+export default withTaskContext(WhatsAppMap);

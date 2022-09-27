@@ -3,8 +3,12 @@ import { FlexPlugin } from "@twilio/flex-plugin";
 import { CustomizationProvider } from "@twilio-paste/core/customization";
 import WhatsAppMap from "./components/WhatsAppMap/WhatsAppMap";
 import SimpleMap from "./components/Mapview/Mapview";
+import InboundLocation from "./components/InboundLocation";
+import OutboundLocation from "./components/OutboundLocation";
+import LocationSentIndicator from "./components/LocationSentIndicator";
 
-import Location from "./components/Location";
+// register action handler
+import {} from "./actions/sendMessage";
 
 const PLUGIN_NAME = "FlexCbmWhatsappLocationPlugin";
 
@@ -24,9 +28,22 @@ export default class FlexCbmWhatsappLocationPlugin extends FlexPlugin {
       PasteThemeProvider: CustomizationProvider,
     });
 
-    flex.MessagingCanvas.Content.add(<Location key="location" />, {
-      sortOrder: 100, // put the component last but don't align end or it ends up scrollable
-    });
+    flex.MessagingCanvas.Content.add(
+      <InboundLocation key="inbound-location" />,
+      {
+        sortOrder: 100, // put the component last but don't align end or it ends up scrollable
+      }
+    );
+
+    flex.MessagingCanvas.Content.add(
+      <OutboundLocation key="outbound-location" />,
+      {
+        sortOrder: 0,
+      }
+    );
+    flex.MessageListItem.Content.add(
+      <LocationSentIndicator key="location-sent" />
+    );
 
     // if an API key is setup use the right crm panel to show the map
     console.log(process.env.FLEX_APP_CLICKABLE_MAP);

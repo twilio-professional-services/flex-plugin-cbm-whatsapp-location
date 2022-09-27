@@ -16,6 +16,14 @@ class Location {
   get Valid() {
     return !!this.Latitude && !!this.Longitude;
   }
+
+  get GoogleMapsLatLng() {
+    if (this.Valid) {
+      return { lat: Number(this.Latitude), lng: Number(this.Longitude) };
+    } else {
+      return null;
+    }
+  }
 }
 
 export const locationFromSyncDoc = (syncDoc) => {
