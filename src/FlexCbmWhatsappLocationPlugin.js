@@ -1,7 +1,8 @@
 import React from "react";
 import { FlexPlugin } from "@twilio/flex-plugin";
 import { CustomizationProvider } from "@twilio-paste/core/customization";
-import MapView from "./components/MapView/Mapview";
+import WhatsAppMap from "./components/WhatsAppMap/WhatsAppMap";
+import SimpleMap from "./components/Mapview/Mapview";
 
 import Location from "./components/Location";
 
@@ -28,9 +29,13 @@ export default class FlexCbmWhatsappLocationPlugin extends FlexPlugin {
     });
 
     // if an API key is setup use the right crm panel to show the map
+    console.log(process.env.FLEX_APP_CLICKABLE_MAP);
     if (process.env.FLEX_APP_GOOGLE_MAPS_EMBED_API_KEY) {
-      flex.AgentDesktopView.Panel2.Content.remove("container");
-      flex.AgentDesktopView.Panel2.Content.add(<MapView key="map-view" />);
+      if (process.env.FLEX_APP_CLICKABLE_MAP === "true") {
+        flex.AgentDesktopView.Panel2.Content.replace(<WhatsAppMap key="map" />);
+      } else {
+        flex.AgentDesktopView.Panel2.Content.replace(<SimpleMap key="map" />);
+      }
     }
   }
 }

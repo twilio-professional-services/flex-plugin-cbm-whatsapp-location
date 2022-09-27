@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
-import { Actions, TaskHelper } from "@twilio/flex-ui";
+import { TaskHelper } from "@twilio/flex-ui";
 import Location from "./Location";
 import { SyncDocumentSubscription } from "../../helpers/syncHelper";
 import { locationFromSyncDoc } from "../../classes/location";
+import {
+  setWhatsAppMapComponentViewState,
+  subscribeWhatsAppMapComponentViewState,
+  IncomingLocation,
+  ShowMap,
+} from "../../helpers/whatsAppMapComponentViewState";
 
+// returns customerNumber-twilioNumber string
 const locationKeyFromTaskAttributes = (task) => {
   if (task?.attributes?.channelType !== "whatsapp") return null;
 
@@ -21,20 +28,28 @@ const locationKeyFromTaskAttributes = (task) => {
 };
 
 const LocationContainer = ({ sid }) => {
+  // helper methods
+  const handleToggleMapIconClick = () => {
+    setWhatsAppMapComponentViewState(task.sid, ShowMap, !showMap);
+  };
+
   const locationUpdated = (location) => {
-    updateLocalStateLocation(location);
+    console.log("locationUpdated", location);
     if (task.sid) {
-      Actions.invokeAction("SetComponentState", {
-        name: "whatsapp-task-locations",
-        state: { [task.sid]: location },
-      });
+      setWhatsAppMapComponentViewState(task.sid, IncomingLocation, location); //updates state for map panel
+      setWhatsAppMapComponentViewState(task.sid, ShowMap, true);
     }
   };
-  const [location, updateLocalStateLocation] = useState(null);
-  const task = TaskHelper.getTaskFromConversationSid(sid);
 
+  const task = TaskHelper.getTaskFromConversationSid(sid);
   var locationKey = locationKeyFromTaskAttributes(task);
 
+  // state from store
+  const whatsAppMapDataState = subscribeWhatsAppMapComponentViewState(task.sid);
+  const location = whatsAppMapDataState[IncomingLocation];
+  const showMap = whatsAppMapDataState[ShowMap];
+
+  // subscribe to sync doc and update component view state on location change
   useEffect(() => {
     const syncDocumentSubscription = new SyncDocumentSubscription(
       locationKey,
@@ -50,8 +65,24 @@ const LocationContainer = ({ sid }) => {
   if (task?.attributes?.channelType !== "whatsapp") return null;
 
   if (location && location.Valid)
-    return <Location locationAvailable={true} location={location} />;
-  else return <Location locationAvailable={false} />;
+    return (
+      <Location
+        locationAvailable={true}
+        location={location}
+        showMap={showMap}
+        showToggleMapIcon={true}
+        handleToggleMapIconClick={handleToggleMapIconClick}
+      />
+    );
+  else
+    return (
+      <Location
+        locationAvailable={false}
+        showMap={showMap}
+        showToggleMapIcon={true}
+        handleToggleMapIconClick={handleToggleMapIconClick}
+      />
+    );
 };
 
 export default LocationContainer;

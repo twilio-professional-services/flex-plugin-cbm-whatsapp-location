@@ -1,4 +1,6 @@
 import PlaceIcon from "@material-ui/icons/Place";
+import MapIcon from "@material-ui/icons/Map";
+
 import { Text, Tooltip, Anchor, Button } from "@twilio-paste/core";
 import {
   Container,
@@ -28,11 +30,30 @@ const LocationIcon = ({ locationAvailable, linkTooltipText, link }) => {
   }
 };
 
-const Location = ({ locationAvailable, location }) => {
+const ToggleMapIcon = ({ showMap }) => {
+  const opacity = showMap ? 1 : 0.5;
+  return (
+    <IconDiv>
+      <MapIcon
+        style={{ fontSize: "36px" }}
+        opacity={opacity}
+        title="Toggle Map"
+      />
+    </IconDiv>
+  );
+};
+
+const Location = ({
+  locationAvailable,
+  location,
+  showToggleMapIcon,
+  showMap,
+  handleToggleMapIconClick,
+}) => {
   const locationContent = () =>
     locationAvailable
-      ? `Location updated ${location.UpdatedRelativeTime}`
-      : "No location data";
+      ? `Incoming location updated ${location.UpdatedRelativeTime}`
+      : "No incoming location data";
 
   const link = locationAvailable
     ? `https://www.google.com/maps/search/?api=1&query=${location.Latitude}%2C${location.Longitude}`
@@ -56,15 +77,30 @@ const Location = ({ locationAvailable, location }) => {
       </SeparatorContainer>
 
       <Container>
-        <LocationIcon
-          locationAvailable={locationAvailable}
-          linkTooltipText={linkTooltipText}
-          link={link}
-        />
+        <Button variant="secondary_icon">
+          <LocationIcon
+            locationAvailable={locationAvailable}
+            linkTooltipText={linkTooltipText}
+            link={link}
+          />
+        </Button>
 
         <Ticker tickRate="tick10s">
-          {() => <Text>{locationContent()}</Text>}
+          {() => <Text style={{ width: "100%" }}>{locationContent()}</Text>}
         </Ticker>
+
+        {showToggleMapIcon && (
+          <Tooltip text="Toggle Map">
+            <Button
+              variant="secondary_icon"
+              size="circle"
+              pressed="true"
+              onClick={() => handleToggleMapIconClick()}
+            >
+              <ToggleMapIcon showMap={showMap} />
+            </Button>
+          </Tooltip>
+        )}
       </Container>
     </>
   );

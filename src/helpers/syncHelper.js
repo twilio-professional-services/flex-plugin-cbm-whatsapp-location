@@ -39,9 +39,6 @@ export class SyncDocumentSubscription {
         data: {},
       });
     }
-
-    console.log("DEBUG - start", this._document);
-
     // if data isn't empty pass it to the callback
     if (Object.keys(this._document.data).length !== 0)
       this._documentChanged(this._document);
