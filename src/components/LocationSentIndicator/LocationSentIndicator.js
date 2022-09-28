@@ -1,19 +1,14 @@
 import { Text } from "@twilio-paste/core";
 import PlaceIcon from "@material-ui/icons/Place";
+import { Container } from "./LocationSentIndicator.Styles";
 
 const LocationSentIndicator = (props) => {
   if (props.message?.source?.attributes?.locationSent) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "right",
-          marginBottom: "15px",
-        }}
-      >
+      <Container>
         <Text>Location sent</Text>
         <PlaceIcon />
-      </div>
+      </Container>
     );
   }
   return null;

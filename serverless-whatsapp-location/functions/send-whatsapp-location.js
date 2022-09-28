@@ -18,8 +18,6 @@ exports.handler = TokenValidator(async function (context, event, callback) {
       to: To,
     });
 
-    console.log(message);
-
     response.appendHeader("Content-Type", "application/json");
     response.setBody({ result: true, messageSid: message.sid });
     return callback(null, response);

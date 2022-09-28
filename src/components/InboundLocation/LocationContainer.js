@@ -19,7 +19,6 @@ const locationKeyFromTaskAttributes = (task) => {
 
   if (from && task?.attributes?.conversations?.external_contact) {
     const key = `${from}-${external_contact}`;
-    console.log("checking for location data for key", key);
     return key;
   } else {
     console.log("Check task attributes. Unable to build key for location data");
