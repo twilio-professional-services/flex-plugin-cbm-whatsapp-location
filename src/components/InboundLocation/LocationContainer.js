@@ -1,4 +1,4 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { TaskHelper } from "@twilio/flex-ui";
 import Location from "./Location";
 import { SyncDocumentSubscription } from "../../helpers/syncHelper";
@@ -26,7 +26,7 @@ const locationKeyFromTaskAttributes = (task) => {
   }
 };
 
-const LocationContainer = ({ sid }) => {
+const LocationContainer = ({ sid, mapToggleOption }) => {
   // helper methods
   const handleToggleMapIconClick = () => {
     setWhatsAppMapComponentViewState(task.sid, ShowMap, !showMap);
@@ -69,7 +69,7 @@ const LocationContainer = ({ sid }) => {
         locationAvailable={true}
         location={location}
         showMap={showMap}
-        showToggleMapIcon={true}
+        showToggleMapIcon={mapToggleOption}
         handleToggleMapIconClick={handleToggleMapIconClick}
       />
     );
@@ -78,7 +78,7 @@ const LocationContainer = ({ sid }) => {
       <Location
         locationAvailable={false}
         showMap={showMap}
-        showToggleMapIcon={true}
+        showToggleMapIcon={mapToggleOption}
         handleToggleMapIconClick={handleToggleMapIconClick}
       />
     );

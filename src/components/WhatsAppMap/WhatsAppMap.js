@@ -70,7 +70,7 @@ const WhatsAppMap = ({ task }) => {
       initialLocationCenter={mapCenter}
       initialZoom={initialZoom}
       clickHandler={clickHandler}
-      apiKey={process.env.FLEX_APP_GOOGLE_MAPS_EMBED_API_KEY}
+      apiKey={process.env.FLEX_APP_GOOGLE_MAPS_API_KEY}
     >
       {clickMarkerLocation && (
         <Marker key="click-marker" position={clickMarkerLocation} />

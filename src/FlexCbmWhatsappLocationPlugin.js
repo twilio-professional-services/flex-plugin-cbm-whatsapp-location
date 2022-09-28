@@ -28,31 +28,41 @@ export default class FlexCbmWhatsappLocationPlugin extends FlexPlugin {
       PasteThemeProvider: CustomizationProvider,
     });
 
+    const apiKey = process.env.FLEX_APP_GOOGLE_MAPS_API_KEY; // can be either iframe embed key or API key
+    const clickableMap = !!(
+      process.env.FLEX_APP_CLICKABLE_MAP &&
+      process.env.FLEX_APP_CLICKABLE_MAP.toLowerCase() === "true"
+    );
+
+    // panel 2 shows either clickable map or iframe depending on if clickable map is set. If API key support google maps API as well as iframe set clickable map to true
+    console.log(process.env.FLEX_APP_CLICKABLE_MAP);
+    if (apiKey) {
+      if (clickableMap) {
+        flex.AgentDesktopView.Panel2.Content.replace(<WhatsAppMap key="map" />);
+      } else {
+        flex.AgentDesktopView.Panel2.Content.replace(<SimpleMap key="map" />);
+      }
+    }
+
+    // Show Location Sent by Customer
     flex.MessagingCanvas.Content.add(
-      <InboundLocation key="inbound-location" />,
+      <InboundLocation key="inbound-location" mapToggleOption={clickableMap} />,
       {
         sortOrder: 100, // put the component last but don't align end or it ends up scrollable
       }
     );
 
+    // If click on Google map show the location that will be sent along with the next message
     flex.MessagingCanvas.Content.add(
       <OutboundLocation key="outbound-location" />,
       {
         sortOrder: 0,
       }
     );
+
+    // If we send a message via messaging API tag the agent message sent within conversations so we can show a location was sent
     flex.MessageListItem.Content.add(
       <LocationSentIndicator key="location-sent" />
     );
-
-    // if an API key is setup use the right crm panel to show the map
-    console.log(process.env.FLEX_APP_CLICKABLE_MAP);
-    if (process.env.FLEX_APP_GOOGLE_MAPS_EMBED_API_KEY) {
-      if (process.env.FLEX_APP_CLICKABLE_MAP === "true") {
-        flex.AgentDesktopView.Panel2.Content.replace(<WhatsAppMap key="map" />);
-      } else {
-        flex.AgentDesktopView.Panel2.Content.replace(<SimpleMap key="map" />);
-      }
-    }
   }
 }

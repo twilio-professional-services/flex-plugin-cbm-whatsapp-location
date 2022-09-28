@@ -35,6 +35,21 @@ exports.handler = async function (context, event, callback) {
       });
     }
   }
+  console.log(
+    context.WHATSAPP_SANDBOX_NUMBER,
+    context.WHATSAPP_SANDBOX_HANDLER_URL
+  );
+  if (
+    To === `whatsapp:${context.WHATSAPP_SANDBOX_NUMBER}` &&
+    context.WHATSAPP_SANDBOX_HANDLER_URL
+  ) {
+    const redirectResponse = new Twilio.Response();
+    redirectResponse.setStatusCode(302);
+    redirectResponse.setHeaders({
+      Location: context.WHATSAPP_SANDBOX_HANDLER_URL,
+    });
+    return callback(null, redirectResponse);
+  }
 
   callback(null, response);
 };

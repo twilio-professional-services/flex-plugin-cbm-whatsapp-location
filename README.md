@@ -1,31 +1,32 @@
-# Your custom Twilio Flex Plugin
+# Whatsapp Location Flex UI Plugin
 
-Twilio Flex Plugins allow you to customize the appearance and behavior of [Twilio Flex](https://www.twilio.com/flex). If you want to learn more about the capabilities and how to use the API, check out our [Flex documentation](https://www.twilio.com/docs/flex).
+## Disclaimer
 
-## Setup
+**This software is to be considered "sample code", a Type B Deliverable, and is delivered "as-is" to the user. Twilio bears no responsibility to support the use or implementation of this software.**
 
-Make sure you have [Node.js](https://nodejs.org) as well as [`npm`](https://npmjs.com). We support Node >= 10.12 (and recommend the _even_ versions of Node). Afterwards, install the dependencies by running `npm install`:
+Handlers customer sending a location from Whatsapp and shows agent the location sent in Flex UI. Also supports agent clicking a location in Google Maps in agent desktop panel 2 and sending the location to the custoemr.
 
-```bash
-cd 
 
-# If you use npm
-npm install
-```
+![Demo](./screenshots/video.gif)
 
-Next, please install the [Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart) by running:
+# TODO - README IS WIP
 
-```bash
-brew tap twilio/brew && brew install twilio
-```
+# TODO
 
-Finally, install the [Flex Plugin extension](https://github.com/twilio-labs/plugin-flex/tree/v1-beta) for the Twilio CLI:
+## Google API Keys Required for outbound and non Iframe
 
-```bash
-twilio plugins:install @twilio-labs/plugin-flex
-```
+## Implementation Notes
 
-## Development
+## Flex UI v2 only Disclaimer (CBM/PASTE ETC)
 
-Run `twilio flex:plugins --help` to see all the commands we currently support. For further details on Flex Plugins refer to our documentation on the [Twilio Docs](https://www.twilio.com/docs/flex/developer/plugins/cli) page.
+## Sanbox Note
 
+# SETUP
+
+## Deploy Serverless
+
+### Notes on .env if using sandbox
+
+## Deploy Plugin
+
+### Notes on Google API Key
