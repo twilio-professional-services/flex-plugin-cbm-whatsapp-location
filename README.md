@@ -1,13 +1,13 @@
-# Whatsapp Location Flex UI Plugin
+# WhatsApp Location Flex UI Plugin
 
-This Plugin handles customer sending a location from Whatsapp and shows agent the customer location in Flex UI. It also optionally supports agents clicking a location in Google Maps in agent desktop panel 2 and sending the location to the customer.
+This Plugin handles customers sending a location from WhatsApp and shows agent the customer location in Flex UI. It also optionally supports agents clicking a location in Google Maps in agent desktop panel 2 and sending the location to the customer.
 
 ## Disclaimer
 
 **This software is to be considered "sample code", a Type B Deliverable, and is delivered "as-is" to the user. Twilio bears no responsibility to support the use or implementation of this software.**
 
 # Overview
-Twilio WhatsApp support sending and receiving of location using [Programmable Messaging webhooks and APIs]("https://support.twilio.com/hc/en-us/articles/360052128874-Can-I-share-my-location-or-receive-location-information-on-WhatsApp-") 
+Twilio WhatsApp support sending and receiving of location using [Programmable Messaging webhooks and APIs](https://support.twilio.com/hc/en-us/articles/360052128874-Can-I-share-my-location-or-receive-location-information-on-WhatsApp-) 
 
 At the time of writing Twilio Conversations which is used by Flex for Conversations Based Message doesn't pass location data.
 
@@ -20,8 +20,8 @@ The plugin can optionally make use of Google Maps API keys to display the incomi
 ## Google Maps API
 The plugin can operate in the following 'modes'
 + Click to open a google maps page in another window and don't use Agent Desktop Panel 2. (No API key required) 
-+ Use Agent Desktop Panel 2 with iframe of Google Maps - no sending of location to customer supported. ([Google Maps Embed API required]("https://developers.google.com/maps/documentation/embed/get-started"))
-+ Use Agent Desktop Panel 2 with React Google Maps allowing agent to select a location to send. ([Google Maps API required]("https://developers.google.com/maps/documentation/javascript/get-api-key))
++ Use Agent Desktop Panel 2 with iframe of Google Maps - no sending of location to customer supported. ([Google Maps Embed API required](https://developers.google.com/maps/documentation/embed/get-started))
++ Use Agent Desktop Panel 2 with React Google Maps allowing agent to select a location to send. ([Google Maps API required](https://developers.google.com/maps/documentation/javascript/get-api-key))
 
 Note a google account linked to billing may be required and you should investigate how much free developer usage is available from Google before making use of the plugin.
 
@@ -37,7 +37,7 @@ As this message is sent outside of the context of Conversations we update the me
 
 ## Deploy Serverless
 
-If support for receiving messages on a WhatsApp Sandbox number is required update the .env.template and copy to .env. The url would be the url you configured in [these steps]("https://www.twilio.com/docs/flex/admin-guide/setup/conversations/manage-conversations-whatsapp-addresses#configuring-whatsapp-sandbox")
+If support for receiving messages on a WhatsApp Sandbox number is required update the .env.template and copy to .env. The url would be the url you configured in [these steps](https://www.twilio.com/docs/flex/admin-guide/setup/conversations/manage-conversations-whatsapp-addresses#configuring-whatsapp-sandbox)
 
 (For Sandbox support we will modify the url configured in the console after serverless deployment)
 
@@ -46,7 +46,7 @@ WHATSAPP_SANDBOX_HANDLER_URL=
 WHATSAPP_SANDBOX_NUMBER=+14155238886
 ```
 
-Deploy the [Twilo Serverless functions]("https://www.twilio.com/docs/labs/serverless-toolkit/developing") and note the newly created domain.
+Deploy the [Twilo Serverless functions](https://www.twilio.com/docs/labs/serverless-toolkit/developing) and note the newly created domain.
 
 ## Twilio Console
 Navigate to Twilio Console -> Messaging -> Services -> Default Messaging Service for Conversations -> Integration and set the Incoming Messages -> Send Webhook to be the deployed serverless domain/incoming-msg-handler.
