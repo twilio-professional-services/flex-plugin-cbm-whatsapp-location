@@ -51,7 +51,11 @@ Deploy the [Twilo Serverless functions](https://www.twilio.com/docs/labs/serverl
 ## Twilio Console
 Navigate to Twilio Console -> Messaging -> Services -> Default Messaging Service for Conversations -> Integration and set the Incoming Messages -> Send Webhook to be the deployed serverless domain/incoming-msg-handler.
 
-This step ensure that as well as the expected conversations integration with Flex to create new channels, send webhooks to studio and populate the channel with messages it will also create/update a Sync Doc with Location data.
+This step ensure that as well as the expected conversations integration with Flex to create new channels, send webhooks to studio and populate the channel with messages it will also create/update a Sync Doc with Location data. 
+
+Add any whatsapp numbers you expect location data to the Messaging Service from Twilio Console -> Messaging -> Services -> Default Messaging Service for Conversations -> Sender Pool
+Your whatsapp number should have already had a Conversation Address configured in Flex Messaging to be passed to Flex. You can leave this Conversation Address in place so that the message is passed to Flex as normal.
+
 
 ### Sandbox
 For Sandbox support you should also modify Twilio Console -> Messaging -> Settings -> WhatsApp sandbox settings -> When a Message Comes in to poin to the serverless domain/incoming-msg-handler.

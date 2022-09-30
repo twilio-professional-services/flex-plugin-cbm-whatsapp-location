@@ -25,7 +25,7 @@ const handleBeforeSendMessage = (payload) => {
   // + Clear the location from the store so it clears from UI and map Marker
 
   const external_contact = `whatsapp:${task?.attributes?.conversations?.external_contact}`;
-  const from = task?.attributes?.from;
+  const from = task?.attributes?.customerAddress;
 
   payload.messageAttributes = {
     ...payload.messageAttributes,

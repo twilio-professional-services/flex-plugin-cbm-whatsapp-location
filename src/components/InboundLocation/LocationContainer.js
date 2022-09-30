@@ -15,7 +15,7 @@ const locationKeyFromTaskAttributes = (task) => {
   if (task?.attributes?.channelType !== "whatsapp") return null;
 
   const external_contact = `whatsapp:${task?.attributes?.conversations?.external_contact}`;
-  const from = task?.attributes?.from;
+  const from = task?.attributes?.customerAddress;
 
   if (from && task?.attributes?.conversations?.external_contact) {
     const key = `${from}-${external_contact}`;
