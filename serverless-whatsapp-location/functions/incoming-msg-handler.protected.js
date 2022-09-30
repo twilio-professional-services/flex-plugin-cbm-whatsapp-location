@@ -7,16 +7,19 @@ exports.handler = async function (context, event, callback) {
 
   const twilioClient = context.getTwilioClient();
 
-  if (From.startsWith("whatsapp:") && Latitude && Longitude) {
-    const syncDocName = `${From}-${To}`;
-    const expirySeconds = 60 * 60 * 24 * 7; //expires in 7 days
-    const locationData = {
-      Latitude,
-      Longitude,
-      ProfileName: ProfileName || "",
-      Address: Address || "",
-      Label: Label || "",
-    };
+    if (
+      From.startsWith('whatsapp:') &&
+      (ProfileName || (Latitude && Longitude))
+    ) {
+      const syncDocName = `${From}-${To}`
+      const expirySeconds = 60 * 60 * 24 * 7; //expires in 7 days
+      const locationData = {
+        Latitude: Latitude || '',
+        Longitude: Longitude || '',
+        ProfileName: ProfileName || '',
+        Address: Address || '',
+        Label: Label || ''
+      };
 
     try {
       await twilioClient.sync
