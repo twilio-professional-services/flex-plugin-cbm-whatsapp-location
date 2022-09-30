@@ -6,6 +6,7 @@ import SimpleMap from "./components/Mapview/Mapview";
 import InboundLocation from "./components/InboundLocation";
 import OutboundLocation from "./components/OutboundLocation";
 import LocationSentIndicator from "./components/LocationSentIndicator";
+import LocationBubble from "./components/LocationBubble";
 
 // register action handler
 import {} from "./actions/sendMessage";
@@ -64,5 +65,8 @@ export default class FlexCbmWhatsappLocationPlugin extends FlexPlugin {
     flex.MessageListItem.Content.add(
       <LocationSentIndicator key="location-sent" />
     );
+
+    // Add a message to the bubble when location is sent, since the bubble appears as empty
+    flex.MessageBubble.Content.add(<LocationBubble key='location-bubble' />);
   }
 }
