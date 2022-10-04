@@ -6,9 +6,11 @@ import SimpleMap from "./components/Mapview/Mapview";
 import InboundLocation from "./components/InboundLocation";
 import OutboundLocation from "./components/OutboundLocation";
 import LocationSentIndicator from "./components/LocationSentIndicator";
+import ProfileNameBubble from "./components/ProfileNameBubble";
 
 // register action handler
 import {} from "./actions/sendMessage";
+import { MessageBubble } from "@twilio/flex-ui";
 
 const PLUGIN_NAME = "FlexCbmWhatsappLocationPlugin";
 
@@ -64,5 +66,8 @@ export default class FlexCbmWhatsappLocationPlugin extends FlexPlugin {
     flex.MessageListItem.Content.add(
       <LocationSentIndicator key="location-sent" />
     );
+
+    flex.MessageBubble.Content.remove('header');
+    flex.MessageBubble.Content.add(<ProfileNameBubble key="custom-header" />, { sortOrder: -1 });
   }
 }
