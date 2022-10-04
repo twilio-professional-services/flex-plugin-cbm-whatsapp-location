@@ -1,11 +1,13 @@
 import React from "react";
 import { FlexPlugin } from "@twilio/flex-plugin";
 import { CustomizationProvider } from "@twilio-paste/core/customization";
+
 import WhatsAppMap from "./components/WhatsAppMap/WhatsAppMap";
 import SimpleMap from "./components/Mapview/Mapview";
 import InboundLocation from "./components/InboundLocation";
 import OutboundLocation from "./components/OutboundLocation";
 import LocationSentIndicator from "./components/LocationSentIndicator";
+import ProfileNameBubble from "./components/ProfileNameBubble";
 
 // register action handler
 import {} from "./actions/sendMessage";
@@ -63,6 +65,15 @@ export default class FlexCbmWhatsappLocationPlugin extends FlexPlugin {
     // If we send a message via messaging API tag the agent message sent within conversations so we can show a location was sent
     flex.MessageListItem.Content.add(
       <LocationSentIndicator key="location-sent" />
+    );
+
+    // This replaces the message bubble header with a custom one, in order to use the customer's WhatsApp profile name in the header
+    // If you don't want to display their WhatsApp name, simply comment/remove MessageBubble.Content.remove() and MessageBubble.Content.add()
+    flex.MessageBubble.Content.remove("header");
+    flex.MessageBubble.Content.add(<ProfileNameBubble key="custom-header" />, 
+      { 
+        sortOrder: -1 
+      }
     );
   }
 }
