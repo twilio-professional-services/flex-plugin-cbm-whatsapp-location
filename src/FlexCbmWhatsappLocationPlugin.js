@@ -1,6 +1,7 @@
 import React from "react";
 import { FlexPlugin } from "@twilio/flex-plugin";
 import { CustomizationProvider } from "@twilio-paste/core/customization";
+
 import WhatsAppMap from "./components/WhatsAppMap/WhatsAppMap";
 import SimpleMap from "./components/Mapview/Mapview";
 import InboundLocation from "./components/InboundLocation";
@@ -10,7 +11,6 @@ import ProfileNameBubble from "./components/ProfileNameBubble";
 
 // register action handler
 import {} from "./actions/sendMessage";
-import { MessageBubble } from "@twilio/flex-ui";
 
 const PLUGIN_NAME = "FlexCbmWhatsappLocationPlugin";
 
