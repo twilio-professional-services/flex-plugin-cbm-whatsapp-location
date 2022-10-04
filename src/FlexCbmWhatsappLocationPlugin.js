@@ -67,7 +67,13 @@ export default class FlexCbmWhatsappLocationPlugin extends FlexPlugin {
       <LocationSentIndicator key="location-sent" />
     );
 
-    flex.MessageBubble.Content.remove('header');
-    flex.MessageBubble.Content.add(<ProfileNameBubble key="custom-header" />, { sortOrder: -1 });
+    // This replaces the message bubble header with a custom one, in order to use the customer's WhatsApp profile name in the header
+    // If you don't want to display their WhatsApp name, simply comment/remove MessageBubble.Content.remove() and MessageBubble.Content.add()
+    flex.MessageBubble.Content.remove("header");
+    flex.MessageBubble.Content.add(<ProfileNameBubble key="custom-header" />, 
+      { 
+        sortOrder: -1 
+      }
+    );
   }
 }
